@@ -1,9 +1,14 @@
 <?php
 include 'connection.php';
-
+echo '<link rel="stylesheet" href="assets/css/style.css">';
+echo"<body background='http://localhost/recipe_book/photos/bg.jpg'>";
 $item=$_POST["checkbox"];
 foreach ($item as $item1) {
-$qu="DELETE FROM `rec` WHERE 'name' LIKE '$item1'";
+$qu="DELETE FROM `rec` WHERE rid='$item1'";
+$sql="DELETE FROM `relation` WHERE rid='$item1'";
+$query="DELETE FROM `artigos` WHERE id='$item1'";
+ mysqli_query($connection, $query);
+ mysqli_query($connection, $sql);
  if (mysqli_query($connection, $qu))
  {
     echo "<html>
@@ -13,9 +18,10 @@ $qu="DELETE FROM `rec` WHERE 'name' LIKE '$item1'";
     <body>
       <a href='logout.php' style='float: right;'>Logout</a>
       <br><br>
-      <br>Record deleted successfully
-    <form action='adminhome.php'>
-      <input type='Submit' name='submit'>
+      <div class='head_title text-center'>
+          <h4>Record deleted successfully</h4></div>
+<br><br><a href='adminhome.php' class='btn btn-primary'>Back</a>
+
     </form>
     </body>
     </html>";
@@ -24,5 +30,6 @@ $qu="DELETE FROM `rec` WHERE 'name' LIKE '$item1'";
   else {
   echo "Error: " . $qu . "<br>" . mysqli_error($connection);
 }
-
+}
  ?>
+
